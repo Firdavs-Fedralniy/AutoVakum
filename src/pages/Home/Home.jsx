@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../../components/Header/Header'
-import Hero from '../../components/hero/Hero'
+import Hero from '../../components/Hero/Hero'
 import BeforeAfter from '../../components/BeforeAfter/BeforeAfter';
 import Gallery from '../../components/Gallery/Gallery';
 import Reviews from '../../components/Reviews/Review';
