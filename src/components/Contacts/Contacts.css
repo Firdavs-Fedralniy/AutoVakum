@@ -1,0 +1,471 @@
+
+/* ========================================
+   CONTACTS
+======================================== */
+
+.contacts-section {
+  width: 100%;
+
+  background: #fff;
+
+  opacity: 0;
+  transform: translate3d(0, 45px, 0);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.contacts-section.scroll-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* ========================================
+   CONTAINER
+======================================== */
+
+.contacts-container {
+  width: min(1200px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  padding: 100px 0 90px;
+}
+
+
+/* ========================================
+   HEADER
+======================================== */
+
+.contacts-header {
+  max-width: 650px;
+
+  margin: 0 auto 55px;
+
+  text-align: center;
+}
+
+.contacts-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: #f5811f;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.contacts-title {
+  margin: 0;
+
+  color: #142338;
+
+  font-size: 42px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.contacts-description {
+  margin: 15px 0 0;
+
+  color: #6b7484;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+
+/* ========================================
+   CONTENT
+======================================== */
+
+.contacts-content {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 70px;
+
+  align-items: center;
+}
+
+
+/* ========================================
+   CONTACT INFO
+======================================== */
+
+.contacts-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+}
+
+.contact-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #f5f6f8;
+
+  color: #f5811f;
+
+  font-size: 19px;
+}
+
+.contact-item span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #8b93a1;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.contact-item a,
+.contact-item strong {
+  display: block;
+
+  color: #142338;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+.contact-item a {
+  transition: color 0.2s ease;
+}
+
+.contact-item a:hover {
+  color: #f5811f;
+}
+
+
+/* ========================================
+   FORM
+======================================== */
+
+.contacts-form-wrapper {
+  padding: 35px;
+
+  border: 1px solid #eceef1;
+
+  border-radius: 22px;
+
+  background: #fff;
+
+  box-shadow:
+    0 20px 50px rgba(20, 35, 56, 0.07);
+}
+
+.contacts-form-header {
+  margin-bottom: 25px;
+}
+
+.contacts-form-header > span {
+  color: #f5811f;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.contacts-form-header h3 {
+  margin: 7px 0 7px;
+
+  color: #142338;
+
+  font-size: 25px;
+}
+
+.contacts-form-header p {
+  margin: 0;
+
+  color: #8b93a1;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* FORM */
+
+.contacts-form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.contacts-form input {
+  width: 100%;
+
+  height: 50px;
+
+  box-sizing: border-box;
+
+  padding: 0 15px;
+
+  border: 1px solid #e1e5ea;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background: #f8f9fa;
+
+  color: #142338;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.contacts-form input:focus {
+  border-color: #f5811f;
+
+  background: #fff;
+}
+
+.contacts-form button {
+  min-height: 50px;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  background: #f5811f;
+
+  color: #fff;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.contacts-form button:hover {
+  transform: translateY(-2px);
+}
+
+.contacts-success {
+  margin: 12px 0 0;
+
+  color: #28a745;
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+
+/* ========================================
+   MAP
+======================================== */
+
+.contacts-map {
+  width: 100%;
+
+  height: 450px;
+
+  overflow: hidden;
+}
+
+.contacts-map iframe {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  border: 0;
+}
+
+
+/* ========================================
+   DARK MODE
+======================================== */
+
+body.dark .contacts-section {
+  background: #080808;
+}
+
+body.dark .contacts-title {
+  color: #fff;
+}
+
+body.dark .contacts-description {
+  color: #999;
+}
+
+body.dark .contact-icon {
+  background: #111;
+
+  color: #e50914;
+}
+
+body.dark .contact-item a,
+body.dark .contact-item strong {
+  color: #fff;
+}
+
+body.dark .contact-item a:hover {
+  color: #e50914;
+}
+
+body.dark .contacts-form-wrapper {
+  background: #111;
+
+  border-color: #292929;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.5);
+}
+
+body.dark .contacts-form-header h3 {
+  color: #fff;
+}
+
+body.dark .contacts-form-header p {
+  color: #777;
+}
+
+body.dark .contacts-form input {
+  background: #080808;
+
+  border-color: #333;
+
+  color: #fff;
+}
+
+body.dark .contacts-form input::placeholder {
+  color: #666;
+}
+
+body.dark .contacts-form input:focus {
+  border-color: #e50914;
+}
+
+body.dark .contacts-form button {
+  background: #e50914;
+}
+
+body.dark .contacts-form button:hover {
+  background: #b80710;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 800px) {
+  .contacts-container {
+    width: calc(100% - 30px);
+
+    padding: 75px 0 65px;
+  }
+
+  .contacts-title {
+    font-size: 32px;
+  }
+
+  .contacts-description {
+    font-size: 14px;
+  }
+
+  .contacts-content {
+    grid-template-columns: 1fr;
+
+    gap: 40px;
+  }
+
+  .contacts-form-wrapper {
+    padding: 25px 20px;
+
+    border-radius: 18px;
+  }
+
+  .contacts-map {
+    height: 350px;
+  }
+}
+
+@media (max-width: 430px) {
+  .contacts-container {
+    width: calc(100% - 24px);
+  }
+
+  .contacts-title {
+    font-size: 28px;
+  }
+
+  .contact-item {
+    gap: 12px;
+  }
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .contacts-form-header h3 {
+    font-size: 21px;
+  }
+
+  .contacts-map {
+    height: 300px;
+  }
+}
+
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .contacts-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+

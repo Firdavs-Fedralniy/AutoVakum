@@ -1,0 +1,209 @@
+
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+  width: 100%;
+
+  background: #142338;
+
+  color: #fff;
+}
+
+
+/* ========================================
+   INNER
+======================================== */
+
+.footer__inner {
+  width: min(1200px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  padding: 65px 0;
+
+  display: grid;
+
+  grid-template-columns: 1.5fr 1fr 1fr;
+
+  gap: 70px;
+}
+
+
+/* ========================================
+   BRAND
+======================================== */
+
+.footer__logo {
+  display: inline-block;
+
+  margin-bottom: 15px;
+
+  color: #fff;
+
+  font-size: 22px;
+  font-weight: 900;
+
+  letter-spacing: -0.8px;
+}
+
+.footer__logo span {
+  color: #f5811f;
+}
+
+.footer__brand p {
+  max-width: 330px;
+
+  margin: 0;
+
+  color: #aeb8c5;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* ========================================
+   COLUMNS
+======================================== */
+
+.footer__links,
+.footer__contact {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.footer__title {
+  margin-bottom: 8px;
+
+  color: #f5811f;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+.footer__links a,
+.footer__contact a,
+.footer__contact span:not(.footer__title) {
+  color: #c4ccd6;
+
+  font-size: 13px;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer__links a:hover,
+.footer__contact a:hover {
+  color: #f5811f;
+
+  transform: translateX(3px);
+}
+
+
+/* ========================================
+   BOTTOM
+======================================== */
+
+.footer__bottom {
+  width: min(1200px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  padding: 20px 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: #7f8b99;
+
+  font-size: 11px;
+}
+
+
+/* ========================================
+   DARK MODE
+======================================== */
+
+body.dark .footer {
+  background: #050505;
+}
+
+body.dark .footer__logo span {
+  color: #e50914;
+}
+
+body.dark .footer__title {
+  color: #e50914;
+}
+
+body.dark .footer__links a:hover,
+body.dark .footer__contact a:hover {
+  color: #e50914;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 800px) {
+  .footer__inner {
+    width: calc(100% - 30px);
+
+    padding: 50px 0;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer__bottom {
+    width: calc(100% - 30px);
+
+    gap: 10px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+}
+
+
+@media (max-width: 430px) {
+  .footer__inner {
+    width: calc(100% - 24px);
+
+    grid-template-columns: 1fr;
+
+    gap: 30px;
+  }
+
+  .footer__brand {
+    grid-column: auto;
+  }
+
+  .footer__bottom {
+    width: calc(100% - 24px);
+  }
+}
+
