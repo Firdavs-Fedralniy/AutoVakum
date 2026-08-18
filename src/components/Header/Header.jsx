@@ -1,17 +1,44 @@
 import { useLanguage } from "../../context/languageContext";
+import { useRef } from "react";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import "./Header.css";
 
 function Header() {
   const { language, changeLanguage, t } = useLanguage();
 
+
+  const adminClicks = useRef(0);
+const adminTimer = useRef(null);
+
+function handleAdminClick() {
+  adminClicks.current += 1;
+
+  clearTimeout(adminTimer.current);
+
+  adminTimer.current = setTimeout(() => {
+    adminClicks.current = 0;
+  }, 1500);
+
+  if (adminClicks.current >= 5) {
+    adminClicks.current = 0;
+
+    window.dispatchEvent(
+      new CustomEvent("open-admin-login")
+    );
+  }
+}
+
   return (
     <header className="header">
       <div className="header__inner">
 
-        <a href="/" className="header__logo">
-          AVTO<span>VAKUUM</span>
-        </a>
+    <a
+  href="#"
+  className="header__logo"
+  onClick={handleAdminClick}
+>
+  AVTO<span>VAKUUM</span>
+</a>
 
         <nav className="header__nav">
           <a href="#services">
