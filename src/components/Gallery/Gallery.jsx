@@ -1,28 +1,35 @@
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getGallery } from "../../services/galleryApi";
-import "./Gallery.css";
+import { useLanguage } from "../../context/languageContext";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation";
+import "./Gallery.css";
 
 export default function Gallery() {
+  const { t } = useLanguage();
+  const sectionRef = useScrollAnimation();
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [gallery, setGallery] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const refSection = useScrollAnimation()
-
   useEffect(() => {
     async function loadGallery() {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      const data = await getGallery();
-      
+        const data = await getGallery();
 
-      console.log("Gallery:", data);
+        console.log("Gallery:", data);
 
-      setItems(data);
-      setLoading(false);
+        setItems(data || []);
+      } catch (error) {
+        console.error("Gallery error:", error);
+        setItems([]);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadGallery();
@@ -30,7 +37,7 @@ export default function Gallery() {
 
   function openGallery(index) {
     const images = items
-      .map((item) => item.media_url)
+      .map((item) => item.image_url)
       .filter(Boolean);
 
     setGallery(images);
@@ -83,41 +90,42 @@ export default function Gallery() {
 
   return (
     <>
-      <section ref={refSection} className="gallery-section" id="gallery">
-
+      <section
+        ref={sectionRef}
+        className="gallery-section"
+        id="gallery"
+      >
         <div className="gallery-header">
           <span className="gallery-eyebrow">
-            GALEREYA
+            {t.gallery.eyebrow}
           </span>
 
           <h2 className="gallery-title">
-            Ishlarimizdan lavhalar
+            {t.gallery.title}
           </h2>
 
           <p className="gallery-description">
-            Avtomobillarga qilgan ishlarimizdan eng yaxshi
-            lavhalarni ko‘ring.
+            {t.gallery.description}
           </p>
         </div>
 
         {loading && (
           <div className="gallery-status">
-            Yuklanmoqda...
+            {t.gallery.loading}
           </div>
         )}
 
         {!loading && items.length === 0 && (
           <div className="gallery-status">
-            Hozircha galereya bo‘sh.
+            {t.gallery.empty}
           </div>
         )}
 
         {!loading && items.length > 0 && (
           <div className="gallery-table">
-
             <div className="gallery-table-surface">
 
-              {items.slice(0,4).map((item, index) => (
+              {items.map((item, index) => (
                 <div
                   key={item.id}
                   className="gallery-item"
@@ -125,32 +133,27 @@ export default function Gallery() {
                 >
                   <img
                     src={item.image_url}
-                    alt="Avto vakuum"
+                    alt={t.gallery.image}
                     loading="lazy"
                   />
                 </div>
               ))}
 
             </div>
-
           </div>
         )}
-
       </section>
-
-
-      {/* FULLSCREEN */}
 
       {gallery.length > 0 && (
         <div
           className="gallery-modal"
           onClick={closeGallery}
         >
-
           <button
             className="gallery-close"
             onClick={closeGallery}
             type="button"
+            aria-label={t.gallery.close}
           >
             ×
           </button>
@@ -159,6 +162,7 @@ export default function Gallery() {
             className="gallery-arrow gallery-arrow-left"
             onClick={prevImage}
             type="button"
+            aria-label={t.gallery.previous}
           >
             ←
           </button>
@@ -169,7 +173,7 @@ export default function Gallery() {
           >
             <img
               src={gallery[currentIndex]}
-              alt="Galereya"
+              alt={t.gallery.image}
             />
           </div>
 
@@ -177,6 +181,7 @@ export default function Gallery() {
             className="gallery-arrow gallery-arrow-right"
             onClick={nextImage}
             type="button"
+            aria-label={t.gallery.next}
           >
             →
           </button>
@@ -184,7 +189,6 @@ export default function Gallery() {
           <div className="gallery-counter">
             {currentIndex + 1} / {gallery.length}
           </div>
-
         </div>
       )}
     </>

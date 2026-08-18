@@ -1,12 +1,16 @@
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 import { getBeforeAfter } from "../../services/beforeAfterApi";
-import "./BeforeAfter.css";
+import { useLanguage } from "../../context/languageContext";
 import { useScrollAnimation } from "../../hooks/useScrollAnimation";
+import "./BeforeAfter.css";
 
 function WorkCard({ item, onOpen }) {
+  const { t } = useLanguage();
+
   return (
     <div className="wc-card">
       <div className="wc-images">
+
         <div
           className="wc-half"
           onClick={() => onOpen(item.before_url)}
@@ -14,11 +18,11 @@ function WorkCard({ item, onOpen }) {
           <img
             className="wc-img"
             src={item.before_url}
-            alt="Oldin"
+            alt={t.beforeAfter.before}
           />
 
           <span className="wc-badge wc-badge-before">
-            OLDIN
+            {t.beforeAfter.before}
           </span>
         </div>
 
@@ -29,11 +33,11 @@ function WorkCard({ item, onOpen }) {
           <img
             className="wc-img"
             src={item.after_url}
-            alt="Keyin"
+            alt={t.beforeAfter.after}
           />
 
           <span className="wc-badge wc-badge-after">
-            KEYIN
+            {t.beforeAfter.after}
           </span>
         </div>
       </div>
@@ -48,21 +52,31 @@ function WorkCard({ item, onOpen }) {
 }
 
 export default function BeforeAfter() {
+  const { t } = useLanguage();
+  const sectionRef = useScrollAnimation();
+
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [gallery, setGallery] = useState([]);
   const [currentImage, setCurrentImage] = useState(0);
-  const refSection = useScrollAnimation()
 
   useEffect(() => {
     async function loadItems() {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      const data = await getBeforeAfter();
+        const data = await getBeforeAfter();
 
-      setItems(data || []);
-      setLoading(false);
+        console.log("Before After:", data);
+
+        setItems(data || []);
+      } catch (error) {
+        console.error("Before After error:", error);
+        setItems([]);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadItems();
@@ -109,29 +123,33 @@ export default function BeforeAfter() {
 
   return (
     <>
-      <section ref={refSection} className="wc-section" id="before-after">
+      <section
+        ref={sectionRef}
+        className="wc-section"
+        id="ishlarimiz"
+      >
         <div className="wc-eyebrow">
-          ISHLARIMIZ
+          {t.beforeAfter.eyebrow}
         </div>
 
         <h2 className="wc-heading">
-          Oldin va keyin
+          {t.beforeAfter.title}
         </h2>
 
         {loading && (
           <div className="wc-status">
-            Yuklanmoqda...
+            {t.beforeAfter.loading}
           </div>
         )}
 
         {!loading && items.length === 0 && (
           <div className="wc-status">
-            Hozircha ishlar qo'shilmagan.
+            {t.beforeAfter.empty}
           </div>
         )}
 
         <div className="wc-grid">
-          {items.slice(0,3).map((item) => (
+          {items.map((item) => (
             <WorkCard
               key={item.id}
               item={item}
@@ -141,8 +159,6 @@ export default function BeforeAfter() {
         </div>
       </section>
 
-      {/* GALLERY */}
-
       {gallery.length > 0 && (
         <div
           className="wc-modal"
@@ -151,6 +167,8 @@ export default function BeforeAfter() {
           <button
             className="wc-modal-close"
             onClick={closeGallery}
+            type="button"
+            aria-label={t.beforeAfter.close}
           >
             ×
           </button>
@@ -158,13 +176,15 @@ export default function BeforeAfter() {
           <button
             className="wc-modal-arrow wc-modal-arrow-left"
             onClick={prevImage}
+            type="button"
+            aria-label={t.beforeAfter.previous}
           >
             ←
           </button>
 
           <img
             src={gallery[currentImage]}
-            alt="Ish"
+            alt={t.beforeAfter.image}
             className="wc-modal-img"
             onClick={(e) => e.stopPropagation()}
           />
@@ -172,6 +192,8 @@ export default function BeforeAfter() {
           <button
             className="wc-modal-arrow wc-modal-arrow-right"
             onClick={nextImage}
+            type="button"
+            aria-label={t.beforeAfter.next}
           >
             →
           </button>

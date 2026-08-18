@@ -350,3 +350,174 @@ body.dark .theme-toggle:hover {
     transform: translate3d(0, 0, 0);
   }
 }
+
+
+
+/* ========================================
+   LANGUAGE SWITCHER
+======================================== */
+
+.language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  white-space: nowrap;
+}
+
+.language-button {
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #8b98a8;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.language-button:hover {
+  color: #102a43;
+}
+
+.language-button--active {
+  color: #f47b20;
+}
+
+.language-divider {
+  color: #c7ced6;
+  font-size: 11px;
+}
+
+
+/* ========================================
+   INSTAGRAM
+======================================== */
+
+.header__instagram {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #dfe5eb;
+  border-radius: 50%;
+
+  background: #fff;
+
+  color: #102a43;
+
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.header__instagram svg {
+  width: 19px;
+  height: 19px;
+
+  fill: none;
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+}
+
+.header__instagram .instagram-dot {
+  fill: currentColor;
+  stroke: none;
+}
+
+.header__instagram:hover {
+  color: #e1306c;
+  border-color: #e1306c;
+
+  transform: translateY(-2px);
+}
+
+
+/* ========================================
+   DARK MODE
+======================================== */
+
+body.dark .language-button {
+  color: #777;
+}
+
+body.dark .language-button:hover {
+  color: #fff;
+}
+
+body.dark .language-button--active {
+  color: #e50914;
+}
+
+body.dark .language-divider {
+  color: #444;
+}
+
+body.dark .header__instagram {
+  background: #111;
+  border-color: #333;
+  color: #fff;
+}
+
+body.dark .header__instagram:hover {
+  color: #e50914;
+  border-color: #e50914;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 800px) {
+  .header__actions {
+    gap: 7px;
+  }
+
+  .language-switcher {
+    gap: 3px;
+  }
+
+  .language-button {
+    font-size: 10px;
+  }
+
+  .header__instagram {
+    width: 36px;
+    height: 36px;
+  }
+
+  .header__instagram svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+@media (max-width: 500px) {
+  .header__instagram {
+    width: 34px;
+    height: 34px;
+  }
+
+  .language-button {
+    font-size: 9px;
+  }
+
+  .language-divider {
+    font-size: 9px;
+  }
+}

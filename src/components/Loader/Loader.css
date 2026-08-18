@@ -1,0 +1,168 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f8fafc;
+
+  transition:
+    opacity 0.7s ease,
+    visibility 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.loader--hide {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+}
+
+.loader__content {
+  width: min(320px, calc(100% - 50px));
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader__logo {
+  color: #102a43;
+
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+
+  animation: loaderLogoIn 0.7s ease both;
+}
+
+.loader__logo span {
+  color: #f47b20;
+}
+
+.loader__line {
+  width: 100%;
+  height: 4px;
+
+  margin-top: 25px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background: #e2e8f0;
+}
+
+.loader__progress {
+  width: 0;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: #f47b20;
+
+  animation: loaderProgress 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.loader__text {
+  margin-top: 12px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  animation: loaderTextIn 0.7s ease 0.15s both;
+}
+
+@keyframes loaderLogoIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes loaderProgress {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes loaderTextIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* DARK MODE */
+
+body.dark .loader {
+  background: #080808;
+}
+
+body.dark .loader__logo {
+  color: #fff;
+}
+
+body.dark .loader__logo span {
+  color: #e50914;
+}
+
+body.dark .loader__line {
+  background: #252525;
+}
+
+body.dark .loader__progress {
+  background: #e50914;
+}
+
+body.dark .loader__text {
+  color: #777;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+  .loader__logo {
+    font-size: 23px;
+  }
+
+  .loader__content {
+    width: min(280px, calc(100% - 40px));
+  }
+}
+
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .loader,
+  .loader__logo,
+  .loader__progress,
+  .loader__text {
+    animation: none;
+  }
+
+  .loader__progress {
+    width: 100%;
+  }
+}

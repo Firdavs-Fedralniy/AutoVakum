@@ -1,39 +1,112 @@
-import React from 'react'
-import "./Header.css"
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
+import { useLanguage } from "../../context/languageContext";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import "./Header.css";
 
 function Header() {
+  const { language, changeLanguage, t } = useLanguage();
+
   return (
     <header className="header">
-      <div className="container header__inner">
+      <div className="header__inner">
+
         <a href="/" className="header__logo">
-          AUTO<span>VAKUM</span>
+          AVTO<span>VAKUUM</span>
         </a>
 
         <nav className="header__nav">
-          <a href="#services">Xizmatlar</a>
-          <a href="#before-after">Oldin / Keyin</a>
-          <a href="#gallery">Galereya</a>
-          <a href="#reviews">Mijozlar fikri</a>
-          <a href="#contacts">Bog‘lanish</a>
+          <a href="#services">
+            {t.header.services}
+          </a>
+
+          <a href="#ishlarimiz">
+            {t.header.beforeAfter}
+          </a>
+
+          <a href="#gallery">
+            {t.header.gallery}
+          </a>
+
+          <a href="#reviews">
+            {t.header.reviews}
+          </a>
+
+          <a href="#contacts">
+            {t.header.contacts}
+          </a>
         </nav>
 
         <div className="header__actions">
 
-          <ThemeToggle/>  
+          <div className="language-switcher">
+            <button
+              type="button"
+              className={
+                language === "uz"
+                  ? "language-button language-button--active"
+                  : "language-button"
+              }
+              onClick={() => changeLanguage("uz")}
+            >
+              UZ
+            </button>
+
+            <span className="language-divider">
+              /
+            </span>
+
+            <button
+              type="button"
+              className={
+                language === "ru"
+                  ? "language-button language-button--active"
+                  : "language-button"
+              }
+              onClick={() => changeLanguage("ru")}
+            >
+              RU
+            </button>
+          </div>
+
           <a
-            href="tel:+998000000000"
+            href="https://www.instagram.com/akbarr_vakumm/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header__instagram"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="5"
+              />
+              <circle cx="12" cy="12" r="4" />
+              <circle
+                cx="17.5"
+                cy="6.5"
+                r="1"
+                className="instagram-dot"
+              />
+            </svg>
+          </a>
+
+          <ThemeToggle />
+
+          <a
+            href="tel:+998901234567"
             className="header__phone"
           >
-            +998 00 000 00 00
+            +998 90 123 45 67
           </a>
 
           <a
             href="#contacts"
             className="header__button"
           >
-            Buyurtma berish
+            {t.header.order}
           </a>
+
         </div>
       </div>
     </header>

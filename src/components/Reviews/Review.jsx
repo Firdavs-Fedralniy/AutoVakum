@@ -1,17 +1,22 @@
-
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getReviews,
   createReview,
 } from "../../services/reviewsApi";
+import { useLanguage } from "../../context/languageContext";
+import { useScrollAnimation } from "../../hooks/useScrollAnimation";
 import "./Reviews.css";
 
 function ReviewCard({ review, active = false }) {
+  const { t } = useLanguage();
+
   return (
     <article
-      className={`review-card ${
-        active ? "review-card--active" : ""
-      }`}
+      className={
+        active
+          ? "review-card review-card--active"
+          : "review-card"
+      }
     >
       <p className="review-text">
         “{review.text}”
@@ -19,14 +24,19 @@ function ReviewCard({ review, active = false }) {
 
       <div className="review-author">
         <strong>{review.name}</strong>
-        <span>Mamnun mijoz</span>
+
+        <span>
+          {t.reviews.client}
+        </span>
       </div>
     </article>
   );
 }
 
 export default function Reviews() {
-    const sectionRef = useRef(null);
+  const { t } = useLanguage();
+  const sectionRef = useScrollAnimation();
+
   const [reviews, setReviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -38,24 +48,36 @@ export default function Reviews() {
 
   useEffect(() => {
     async function loadReviews() {
-      const data = await getReviews();
+      try {
+        setLoading(true);
 
-      console.log("Reviews:", data);
+        const data = await getReviews();
 
-      setReviews(data);
-      setLoading(false);
+        console.log("Reviews:", data);
+
+        setReviews(data || []);
+      } catch (error) {
+        console.error("Reviews error:", error);
+        setReviews([]);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadReviews();
   }, []);
 
   function nextReview() {
+    if (!reviews.length) return;
+
     setCurrentIndex((prev) =>
       prev >= reviews.length - 1 ? 0 : prev + 1
     );
   }
 
   function prevReview() {
+    if (!reviews.length) return;
+
     setCurrentIndex((prev) =>
       prev <= 0 ? reviews.length - 1 : prev - 1
     );
@@ -74,85 +96,59 @@ export default function Reviews() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    if (!name.trim() || !text.trim()) return;
+    const cleanName = name.trim();
+    const cleanText = text.trim();
+
+    if (!cleanName || !cleanText) return;
 
     setSending(true);
 
     const newReview = await createReview(
-      name.trim(),
-      text.trim()
+      cleanName,
+      cleanText
     );
 
     if (newReview) {
       setReviews((prev) => [newReview, ...prev]);
-
       setCurrentIndex(0);
-
       setName("");
       setText("");
     }
 
     setSending(false);
-
   }
 
-
-
-  useEffect(() => {
-  const section = sectionRef.current;
-
-  if (!section) return;
-
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting) {
-        section.classList.add("reviews-visible");
-      } else {
-        section.classList.remove("reviews-visible");
-      }
-    },
-    {
-      threshold: 0.15,
-    }
-  );
-
-  observer.observe(section);
-
-  return () => observer.disconnect();
-}, []);
-
   return (
-    <section ref={sectionRef} className="reviews-section" id="reviews">
-
+    <section
+      ref={sectionRef}
+      className="reviews-section"
+      id="reviews"
+    >
       <div className="reviews-header">
         <span className="reviews-eyebrow">
-          MIJOZLAR FIKRI
+          {t.reviews.eyebrow}
         </span>
 
         <h2 className="reviews-title">
-          Mijozlarimiz nima deydi?
+          {t.reviews.title}
         </h2>
 
         <p className="reviews-description">
-          Bizning xizmatimizdan foydalangan mijozlarning
-          fikrlari.
+          {t.reviews.description}
         </p>
       </div>
 
-
       {loading && (
         <div className="reviews-status">
-          Yuklanmoqda...
+          {t.reviews.loading}
         </div>
       )}
-
 
       {!loading && reviews.length === 0 && (
         <div className="reviews-status">
-          Hozircha sharhlar yo‘q.
+          {t.reviews.empty}
         </div>
       )}
-
 
       {!loading && reviews.length > 0 && (
         <>
@@ -163,10 +159,11 @@ export default function Reviews() {
                 className="review-side review-side--left"
                 onClick={prevReview}
               >
-                <ReviewCard review={getReview(-1)} />
+                <ReviewCard
+                  review={getReview(-1)}
+                />
               </div>
             )}
-
 
             <div className="review-center">
               <ReviewCard
@@ -175,16 +172,16 @@ export default function Reviews() {
               />
             </div>
 
-
             {reviews.length > 1 && (
               <div
                 className="review-side review-side--right"
                 onClick={nextReview}
               >
-                <ReviewCard review={getReview(1)} />
+                <ReviewCard
+                  review={getReview(1)}
+                />
               </div>
             )}
-
 
             {reviews.length > 1 && (
               <>
@@ -192,6 +189,7 @@ export default function Reviews() {
                   type="button"
                   className="reviews-arrow reviews-arrow--left"
                   onClick={prevReview}
+                  aria-label="Previous"
                 >
                   ←
                 </button>
@@ -200,14 +198,13 @@ export default function Reviews() {
                   type="button"
                   className="reviews-arrow reviews-arrow--right"
                   onClick={nextReview}
+                  aria-label="Next"
                 >
                   →
                 </button>
               </>
             )}
-
           </div>
-
 
           {reviews.length > 1 && (
             <div className="reviews-dots">
@@ -220,7 +217,10 @@ export default function Reviews() {
                       ? "reviews-dot--active"
                       : ""
                   }`}
-                  onClick={() => setCurrentIndex(index)}
+                  onClick={() =>
+                    setCurrentIndex(index)
+                  }
+                  aria-label={`${index + 1}`}
                 />
               ))}
             </div>
@@ -228,32 +228,29 @@ export default function Reviews() {
         </>
       )}
 
-
-      {/* ФОРМА */}
-
       <div className="review-form-wrapper">
 
         <div className="review-form-header">
-          <span>FIKRINGIZNI BILDIRING</span>
+          <span>
+            {t.reviews.formLabel}
+          </span>
 
           <h3>
-            Xizmatimiz sizga yoqdimi?
+            {t.reviews.formTitle}
           </h3>
 
           <p>
-            O‘z fikringizni biz bilan baham ko‘ring.
+            {t.reviews.formDescription}
           </p>
         </div>
-
 
         <form
           className="review-form"
           onSubmit={handleSubmit}
         >
-
           <input
             type="text"
-            placeholder="Ismingiz"
+            placeholder={t.reviews.namePlaceholder}
             value={name}
             onChange={(e) => setName(e.target.value)}
             maxLength={50}
@@ -261,7 +258,7 @@ export default function Reviews() {
           />
 
           <textarea
-            placeholder="Fikringizni yozing..."
+            placeholder={t.reviews.textPlaceholder}
             value={text}
             onChange={(e) => setText(e.target.value)}
             maxLength={1000}
@@ -274,14 +271,11 @@ export default function Reviews() {
             disabled={sending}
           >
             {sending
-              ? "YUBORILMOQDA..."
-              : "FIKR QOLDIRISH"}
+              ? t.reviews.sending
+              : t.reviews.submit}
           </button>
-
         </form>
-
       </div>
-
     </section>
   );
 }

@@ -1,48 +1,54 @@
-
+import { useLanguage } from "../../context/languageContext";
 import "./Footer.css";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="footer">
+
       <div className="footer__inner">
 
         <div className="footer__brand">
-          <a href="#" className="footer__logo">
-            AVTO <span>VAKUM</span>
+          <a
+            href="/"
+            className="footer__logo"
+          >
+            AVTO <span>VAKUUM</span>
           </a>
 
           <p>
-            Professional avtomobil tozalash va detailing xizmatlari.
+            {t.footer.description}
           </p>
         </div>
 
-
         <div className="footer__links">
+
           <span className="footer__title">
-            NAVIGATSIYA
+            {t.footer.navigation}
           </span>
 
           <a href="#ishlarimiz">
-            Oldin va keyin
+            {t.footer.beforeAfter}
           </a>
 
           <a href="#gallery">
-            Galereya
+            {t.footer.gallery}
           </a>
 
           <a href="#reviews">
-            Sharhlar
+            {t.footer.reviews}
           </a>
 
           <a href="#contacts">
-            Kontaktlar
+            {t.footer.contacts}
           </a>
         </div>
 
-
         <div className="footer__contact">
+
           <span className="footer__title">
-            BOG‘LANISH
+            {t.footer.contact}
           </span>
 
           <a href="tel:+998901234567">
@@ -50,13 +56,13 @@ export default function Footer() {
           </a>
 
           <span>
-            Toshkent shahri
+            {t.footer.city}
           </span>
 
           <a
             href="https://www.instagram.com/akbarr_vakumm/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Instagram
           </a>
@@ -64,15 +70,16 @@ export default function Footer() {
 
       </div>
 
-
       <div className="footer__bottom">
+
         <span>
           © 2026 AVTO VAKUUM
         </span>
 
         <span>
-          Barcha huquqlar himoyalangan
+          {t.footer.rights}
         </span>
+
       </div>
     </footer>
   );
